@@ -16,9 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
-    if: |
-      (!contains(github.event.pull_request.title, '[skip test]') &&
-      github.event.pull_request.head.repo.full_name == github.repository)
+    if: (!contains(github.event.pull_request.title, '[skip test]'))
 
     env:
       INFURA_API_KEY: ${{ secrets.INFURA_API_KEY }}
@@ -27,6 +25,14 @@ jobs:
       MAGIC_API_KEY: ${{ secrets.MAGIC_API_KEY }}
       MAILSLURP_INDEX_ID: ${{ secrets.MAILSLURP_INDEX_ID }}
     steps:
+      - name: Setup conditional execution
+        id: setup
+        run: |
+          if [[ "${{ github.event.pull_request.head.repo.full_name }}" != "${{ github.repository }}" ]]; then
+            echo "PRs from forks are not allowed to run this workflow."
+            exit 1
+          fi
+
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
