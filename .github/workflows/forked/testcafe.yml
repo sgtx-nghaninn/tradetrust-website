@@ -15,8 +15,8 @@ jobs:
 
     environment: ci
     if: |
-      ${{ !contains(github.event.pull_request.title, '[skip test]') &&
-      github.event.pull_request.head.repo.full_name != github.repository }}
+      (!contains(github.event.pull_request.title, '[skip test]') &&
+      github.event.pull_request.head.repo.full_name != github.repository)
 
     env:
       INFURA_API_KEY: ${{ secrets.INFURA_API_KEY }}
