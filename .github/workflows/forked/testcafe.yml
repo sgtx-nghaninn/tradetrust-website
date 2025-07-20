@@ -1,4 +1,4 @@
-name: Testcafe
+name: Testcafe Forked
 
 on:
   pull_request_target:

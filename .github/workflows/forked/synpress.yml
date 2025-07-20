@@ -1,4 +1,4 @@
-name: Synpress
+name: Synpress Forked
 
 on:
   pull_request_target:
